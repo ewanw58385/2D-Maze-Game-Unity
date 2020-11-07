@@ -17,12 +17,6 @@ public class player_move : MonoBehaviour
         float xSpeed=0;
         float ySpeed=0;
 
-        if (Input.GetKey("a") && Input.GetKey("s") && Input.GetKey("d") && Input.GetKey("w") == false)
-        {
-            xSpeed = 0f;
-            ySpeed = 0f;
-        }
-
         if (Input.GetKey("a"))
         {
             // registers a key held down and returns true
