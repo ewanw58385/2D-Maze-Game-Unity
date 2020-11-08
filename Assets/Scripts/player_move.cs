@@ -17,51 +17,51 @@ public class player_move : MonoBehaviour
         float xSpeed=0;
         float ySpeed=0;
 
-        if (Input.GetKey("a"))
+        if (Input.GetKey("a")) //left
         {
             // registers a key held down and returns true
             xSpeed = -6f;     
-            anim.SetFloat("speedright", 0);  
-            anim.SetFloat("speedleft", 1);                      
+            anim.SetFloat("speedHori", 1);
+            anim.SetFloat("speedFor", 0);
+            anim.SetFloat("speedBack", 0);
+            anim.SetBool("idle", false); //ensures sprite is not idle
+            transform.rotation = Quaternion.Euler(0, 180f, 0); //flips the sprite                                
         }
 
-        if (Input.GetKey("d"))
+        if (Input.GetKey("d")) //right
         {
-            // registers a key held down and returns true
             xSpeed = 6f;
-            anim.SetFloat("speedleft", 0);
-            anim.SetFloat("speedright", 1);           
+            anim.SetFloat("speedHori", 1);
+            anim.SetFloat("speedFor", 0); 
+            anim.SetFloat("speedBack", 0);  
+            anim.SetBool("idle", false);
+            transform.rotation = Quaternion.Euler(0, 0, 0);      
         } 
 
-        if (Input.GetKey("s"))
+        if (Input.GetKey("s")) //backwards
         {
             ySpeed = -6f;
-            anim.SetFloat("speedback", 0);
-            anim.SetFloat("speedfor", 1);
+            anim.SetFloat("speedHori", 0);
+            anim.SetFloat("speedFor", 0);
+            anim.SetFloat("speedBack", 1);
+            anim.SetBool("idle", false);
         }
 
-        if (Input.GetKey("w"))
+        if (Input.GetKey("w")) //forwards
         {
             ySpeed = 6f;
-            anim.SetFloat("speedback", 1);
-            anim.SetFloat("speedfor", 0);
+            anim.SetFloat("speedHori", 0);
+            anim.SetFloat("speedFor", 1);
+            anim.SetFloat("speedBack", 0);
+            anim.SetBool("idle", false);
         } 
 
         if (!Input.anyKey)
         {
-            anim.SetFloat("speedleft", 0f);
-        }
-        if (!Input.anyKey)
-        {
-            anim.SetFloat("speedright", 0f);
-        }
-        if (!Input.anyKey)
-        {
-            anim.SetFloat("speedfor", 0f);
-        }
-        if (!Input.anyKey)
-        {
-            anim.SetFloat("speedback", 0f);
+            anim.SetBool("idle", true);
+            anim.SetFloat("speedHori", 0);
+            anim.SetFloat("speedFor", 0);
+            anim.SetFloat("speedBack", 0);
         }
         
         transform.position += new Vector3(xSpeed * Time.deltaTime, ySpeed * Time.deltaTime, 0);
