@@ -21,26 +21,47 @@ public class player_move : MonoBehaviour
         {
             // registers a key held down and returns true
             xSpeed = -6f;     
-            anim.SetFloat("speed", xSpeed);                        
+            anim.SetFloat("speedright", 0);  
+            anim.SetFloat("speedleft", 1);                      
         }
 
         if (Input.GetKey("d"))
         {
             // registers a key held down and returns true
             xSpeed = 6f;
-            anim.SetFloat("speed", xSpeed);
+            anim.SetFloat("speedleft", 0);
+            anim.SetFloat("speedright", 1);           
         } 
 
         if (Input.GetKey("s"))
         {
             ySpeed = -6f;
-            anim.SetFloat("speed", ySpeed);
+            anim.SetFloat("speedback", 0);
+            anim.SetFloat("speedfor", 1);
         }
 
         if (Input.GetKey("w"))
         {
             ySpeed = 6f;
-            anim.SetFloat("speed", ySpeed);
+            anim.SetFloat("speedback", 1);
+            anim.SetFloat("speedfor", 0);
+        } 
+
+        if (!Input.anyKey)
+        {
+            anim.SetFloat("speedleft", 0f);
+        }
+        if (!Input.anyKey)
+        {
+            anim.SetFloat("speedright", 0f);
+        }
+        if (!Input.anyKey)
+        {
+            anim.SetFloat("speedfor", 0f);
+        }
+        if (!Input.anyKey)
+        {
+            anim.SetFloat("speedback", 0f);
         }
         
         transform.position += new Vector3(xSpeed * Time.deltaTime, ySpeed * Time.deltaTime, 0);
