@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class player_move : MonoBehaviour
 {
-    private Animator anim;
+    public Animator anim;
 
     void Start()
     {
