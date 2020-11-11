@@ -11,7 +11,7 @@ public class followScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        velocity = new Vector2(9f, 0f);
+        velocity = new Vector2(8.5f, 0f);
     }
 
     // Update is called once per frame
