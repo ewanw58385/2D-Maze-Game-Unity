@@ -9,6 +9,7 @@ public class followScript : MonoBehaviour
     public Transform playerPos;
     public Animator anim;
     private Vector3 previousLocation;
+    private bool touchingWall  =false;
 
         void Start()
     {
@@ -19,8 +20,8 @@ public class followScript : MonoBehaviour
     }
         void Update()
     {
-            flipPlayerSprite(); //calls the flip method each frame 
-        }
+        flipPlayerSprite(); //calls the flip method each frame 
+    }
 
          void OnTriggerStay2D(Collider2D col) //enemies collider method
         {
@@ -28,39 +29,44 @@ public class followScript : MonoBehaviour
             {
                 wallCollisonDetection(true); //set bool detection to true         
             }
-            else
-            {
-                wallCollisonDetection(false); //"" false
-            }
-        
+                else
+                {
+                    wallCollisonDetection(false); //"" false
+                }      
             if (col.gameObject.tag == "Player")//if runs into player radius,
             {
-                moveWhenInPlayerRadius(); //call moveinradius method
+                moveWhenInPlayerRadius(touchingWall); //call moveinradius method
             }
         }
 
         private void wallCollisonDetection(bool touchingWall) //method for changing animation if sprite is touching a wall
-    {
-        if(touchingWall) //(is true)
         {
-            anim.SetBool("touchingWall", true);
+            if(touchingWall) //(is true)
+            {
+                anim.SetBool("touchingWall", true);
+            }
+            else
+            {
+                anim.SetBool("touchingWall", false);
+            }
+    }
+
+        private void moveWhenInPlayerRadius(bool touchingWall) //method for following the player
+        {
+            transform.position = Vector2.MoveTowards(transform.position, playerPos.position, velocity * Time.deltaTime); //transform position to follow the player using .MoveTowards
+
+            if (touchingWall) //(while moving towards player)
+            {
+                transform.position = Vector2.MoveTowards(- transform.position, - playerPos.position, velocity * Time.deltaTime); //(move in the opposite direction (-playerpos))
+            }
+            else
+            {
+                anim.SetBool("moreThanRadius", true); //set sprite back to idle when out of range
+            }
         }
 
-        else
-        {
-            anim.SetBool("touchingWall", false);
-        }
-    }
-  
-    }
-
-    private void moveWhenInPlayerRadius() //method for following the player
-    {
-        transform.position = Vector2.MoveTowards(transform.position, playerPos.position, velocity * Time.deltaTime); //transform position to follow the player using .MoveTowardds
-    }
-
-  private void flipPlayerSprite() //method for detecting velocity direction on X axis
-    {
+        private void flipPlayerSprite() //method for detecting velocity direction on X axis
+            {
             Vector3 currentVelocity = (transform.position - previousLocation) / Time.deltaTime; //Current vel = ((current position) - last known location) / time
 
             if(currentVelocity.x != 0) //prevents sprite flipping when velocity direction is unobtainable
@@ -69,11 +75,11 @@ public class followScript : MonoBehaviour
                 {
                     transform.rotation = Quaternion.Euler(0, 180f, 0); //flip when left
                 }
-
-                else
-                {
-                    transform.rotation = Quaternion.Euler(0, 0, 0); // "" right
-                }
+                    else
+                    {
+                        transform.rotation = Quaternion.Euler(0, 0, 0); // "" right
+                    }
             }
-            previousLocation = transform.position; //keeps previous location updated every frame
+        previousLocation = transform.position; //keeps previous location updated every frame
+    }
 }
