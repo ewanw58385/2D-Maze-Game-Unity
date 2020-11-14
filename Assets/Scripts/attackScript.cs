@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 
 public class attackScript : MonoBehaviour
 {
     private Animator anim;
     public Rigidbody2D rb;
+    private Animator playerAnim;
     public GameObject Player;
-    float beforeFallCounter = 0.5f;
+    public float timeBeforeFallCounter = 0.25f;
+    
     
     void Start()
     {
         anim = GetComponent<Animator>();
+        playerAnim = Player.GetComponent<Animator>();
         rb = Player.GetComponent<Rigidbody2D>();
     }
     
@@ -22,13 +26,15 @@ public class attackScript : MonoBehaviour
         {
                 anim.SetBool("attacked", true);
 
-                if (beforeFallCounter > 0) 
+                if (timeBeforeFallCounter > 0) 
                 {
-                    beforeFallCounter -= Time.deltaTime;
+                    timeBeforeFallCounter -= Time.deltaTime;
                 }
-                else if (beforeFallCounter <= 0) 
+                else if (timeBeforeFallCounter <= 0) 
                 {
                     rb.gravityScale = 2.5f;
+                    Player.GetComponent<Collider2D>().isTrigger = true;
+                    playerAnim.SetBool("dead", true);
                 }
         }
     }
@@ -36,5 +42,6 @@ public class attackScript : MonoBehaviour
     void OnTriggerExit2D(Collider2D col)
     {
         anim.SetBool("attacked", false);
+        anim.SetBool("touchingWall", true);
     }
 }

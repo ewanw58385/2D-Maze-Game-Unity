@@ -7,10 +7,10 @@ public class followScript : MonoBehaviour
     public Rigidbody2D rb;
     public Animator anim;
     private Vector3 previousLocation;
-    public Vector2 PlayerPos; 
-    public bool touchingWall;
+    private Vector2 PlayerPos; 
+    private bool touchingWall;
     public float velocity;
-    public float wallTimer = 1.5f;
+    private float wallTimer = 1.5f;
     
      void Start()
     {
