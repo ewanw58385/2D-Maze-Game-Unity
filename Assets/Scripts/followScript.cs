@@ -88,7 +88,7 @@ public class followScript : MonoBehaviour
 
     private void moveWhenInPlayerRadius() //method for following the player
     {
-        if((touchingWall) || (wallTimer < 1.5)) //both start as false. If player touches a wall, starts timer in if statement + move enemy in opposite direction for duration of timer.
+        if((touchingWall) || (wallTimer < 0.5)) //both start as false. If player touches a wall, starts timer in if statement + move enemy in opposite direction for duration of timer.
         {
                 transform.position = Vector2.MoveTowards(transform.position, transform.InverseTransformDirection(PlayerPos), velocity * Time.deltaTime); //move away from player
 
@@ -98,13 +98,13 @@ public class followScript : MonoBehaviour
                 }
                 else if(wallTimer <= 0) //once timer ends, resets back to 4, so else statement is initialized and enemy returns to following.
                 {
-                    wallTimer = 1.5f;
+                    wallTimer = 0.5f;
                 }
         }
         else 
         {
             transform.position = Vector2.MoveTowards(transform.position, PlayerPos, velocity * Time.deltaTime); //Follows the player using .MoveTowards
-            wallTimer = 1.5f; //ensures timer stays as 1.5 until touchedwall = true. 
+            wallTimer = 0.5f; //ensures timer stays as 1.5 until touchedwall = true. 
         }
         
     } 

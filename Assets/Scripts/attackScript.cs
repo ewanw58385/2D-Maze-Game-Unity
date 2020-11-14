@@ -26,14 +26,14 @@ public class attackScript : MonoBehaviour
         {
                 anim.SetBool("attacked", true);
 
-                if (timeBeforeFallCounter > 0) 
+                if (timeBeforeFallCounter > 0) //stops player falling off map before attack anim has time to finish
                 {
                     timeBeforeFallCounter -= Time.deltaTime;
                 }
                 else if (timeBeforeFallCounter <= 0) 
                 {
                     rb.gravityScale = 2.5f;
-                    Player.GetComponent<Collider2D>().isTrigger = true;
+                    Player.GetComponent<Collider2D>().isTrigger = true; //disables box colliders for player 
                     playerAnim.SetBool("dead", true);
                 }
         }
@@ -42,6 +42,6 @@ public class attackScript : MonoBehaviour
     void OnTriggerExit2D(Collider2D col)
     {
         anim.SetBool("attacked", false);
-        anim.SetBool("touchingWall", true);
+        anim.SetBool("touchingWall", true); //prevents from transitioning to run anim when player killed 
     }
 }
