@@ -5,81 +5,107 @@ using UnityEngine;
 public class followScript : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public float velocity;
-    public Transform playerPos;
     public Animator anim;
     private Vector3 previousLocation;
-    private bool touchingWall  =false;
-
-        void Start()
+    public Vector2 PlayerPos; 
+    public bool touchingWall;
+    public float velocity;
+    public float wallTimer = 1.5f;
+    
+     void Start()
     {
         anim = GetComponent<Animator>();
-        playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>(); //gets position of player for movewheninradious method
         previousLocation = transform.position; /*sets a vector3 varible to starting position of enemy sprite. called in start  method for initial position, 
                                                  varible is called previouspos bc it gets called in update method. */
     }
-        void Update()
+    
+    void Update()
     {
-        flipPlayerSprite(); //calls the flip method each frame 
+       flipPlayerSprite(); //calls the flip method each frame
+       PlayerPos = (GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().position);
+
     }
 
-         void OnTriggerStay2D(Collider2D col) //enemies collider method
+    private void flipPlayerSprite() //method for detecting velocity direction on X axis
+    {
+        Vector3 currentVelocity = (transform.position - previousLocation) / Time.deltaTime; //Current vel = ((current position) - last known location) / time
+        if(currentVelocity.x != 0) //prevents sprite flipping when velocity direction is unobtainable
         {
-            if (col.gameObject.tag == "walls") //if hit enemy runs into wall while following player:
+            if (currentVelocity.x > 0) //moving left; negative X vel
             {
-                wallCollisonDetection(true); //set bool detection to true         
-            }
-                else
-                {
-                    wallCollisonDetection(false); //"" false
-                }      
-            if (col.gameObject.tag == "Player")//if runs into player radius,
-            {
-                moveWhenInPlayerRadius(touchingWall); //call moveinradius method
-            }
-        }
-
-        private void wallCollisonDetection(bool touchingWall) //method for changing animation if sprite is touching a wall
-        {
-            if(touchingWall) //(is true)
-            {
-                anim.SetBool("touchingWall", true);
+                transform.rotation = Quaternion.Euler(0, 180f, 0); //flip when left
             }
             else
             {
-                anim.SetBool("touchingWall", false);
+                transform.rotation = Quaternion.Euler(0, 0, 0); // "" right
             }
-    }
-
-        private void moveWhenInPlayerRadius(bool touchingWall) //method for following the player
-        {
-            transform.position = Vector2.MoveTowards(transform.position, playerPos.position, velocity * Time.deltaTime); //transform position to follow the player using .MoveTowards
-
-            if (touchingWall) //(while moving towards player)
-            {
-                transform.position = Vector2.MoveTowards(- transform.position, - playerPos.position, velocity * Time.deltaTime); //(move in the opposite direction (-playerpos))
-            }
-            else
-            {
-                anim.SetBool("moreThanRadius", true); //set sprite back to idle when out of range
-            }
-        }
-
-        private void flipPlayerSprite() //method for detecting velocity direction on X axis
-            {
-            Vector3 currentVelocity = (transform.position - previousLocation) / Time.deltaTime; //Current vel = ((current position) - last known location) / time
-
-            if(currentVelocity.x != 0) //prevents sprite flipping when velocity direction is unobtainable
-            {
-                if (currentVelocity.x > 0) //moving left; negative X vel
-                {
-                    transform.rotation = Quaternion.Euler(0, 180f, 0); //flip when left
-                }
-                    else
-                    {
-                        transform.rotation = Quaternion.Euler(0, 0, 0); // "" right
-                    }
-            }
+        }           
         previousLocation = transform.position; //keeps previous location updated every frame
     }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "walls") //if hit enemy runs into wall while following player:
+        {
+            touchingWall = true;        
+        }    
+    }
+    void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "walls") //if hit enemy runs into wall while following player:
+        {
+            touchingWall = false;        
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D col) //enemies collider method
+    {
+        if (col.gameObject.tag == "walls") //if hit enemy runs into wall while following player:
+        {
+            wallCollisonDetection(); //set bool detection to true         
+        }
+        else
+        {
+            wallCollisonDetection(); //"" false
+        }      
+        if (col.gameObject.tag == "Player") //if runs into player radius 
+        {
+            moveWhenInPlayerRadius(); //call moveWheninradius method 
+        }
+    }
+
+    private void wallCollisonDetection() //method for changing animation if sprite is touching a wall
+    {
+        if(touchingWall) //(is true)
+        {
+            anim.SetBool("touchingWall", true);
+        }
+        else
+        {
+            anim.SetBool("touchingWall", false);
+        }
+    }
+
+    private void moveWhenInPlayerRadius() //method for following the player
+    {
+        if((touchingWall) || (wallTimer < 1.5)) //both start as false. If player touches a wall, starts timer in if statement + move enemy in opposite direction for duration of timer.
+        {
+                transform.position = Vector2.MoveTowards(transform.position, transform.InverseTransformDirection(PlayerPos), velocity * Time.deltaTime); //move away from player
+
+                if(wallTimer > 0) //starts as 1.5, by default is true: increment timer negativelly.
+                {
+                    wallTimer -= Time.deltaTime;
+                }
+                else if(wallTimer <= 0) //once timer ends, resets back to 4, so else statement is initialized and enemy returns to following.
+                {
+                    wallTimer = 1.5f;
+                }
+        }
+        else 
+        {
+            transform.position = Vector2.MoveTowards(transform.position, PlayerPos, velocity * Time.deltaTime); //Follows the player using .MoveTowards
+            wallTimer = 1.5f; //ensures timer stays as 1.5 until touchedwall = true. 
+        }
+        
+    } 
 }

@@ -201,7 +201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 429550523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.13, y: 1.6672311, z: -12}
+  m_LocalPosition: {x: -11.03, y: -1.9227688, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 890597076}
@@ -622,9 +622,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 817651843}
-  velocity: 2
-  playerPos: {fileID: 0}
   anim: {fileID: 0}
+  PlayerPos: {x: 0, y: 0}
+  touchingWall: 0
+  velocity: 2
+  wallTimer: 10
 --- !u!61 &817651845
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9533,7 +9535,7 @@ GameObject:
   - component: {fileID: 1064844240}
   m_Layer: 0
   m_Name: Tilemap_walls (for stopping)
-  m_TagString: Untagged
+  m_TagString: walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18263,7 +18265,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563150734}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.13, y: 3.33, z: 0}
+  m_LocalPosition: {x: -11.03, y: -0.26, z: 0}
   m_LocalScale: {x: 7.108978, y: 6.545028, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
