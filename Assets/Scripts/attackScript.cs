@@ -11,18 +11,20 @@ public class attackScript : MonoBehaviour
     private Animator playerAnim;
     public GameObject Player;
     public float timeBeforeFallCounter = 0.25f;
-    
-    
+    private float deathThrust = 800f;  
+    bool previousAttacked = false;      
+
+
     void Start()
     {
         anim = GetComponent<Animator>();
         playerAnim = Player.GetComponent<Animator>();
         rb = Player.GetComponent<Rigidbody2D>();
     }
-    
-    void OnTriggerStay2D(Collider2D col)
+
+    void OnTriggerStay2D(Collider2D col) 
     {
-       if (col.gameObject.tag =="attack")  
+       if ((col.gameObject.tag =="attack") && (previousAttacked == false))
         {
                 anim.SetBool("attacked", true);
 
@@ -35,6 +37,8 @@ public class attackScript : MonoBehaviour
                     rb.gravityScale = 2.5f;
                     Player.GetComponent<Collider2D>().isTrigger = true; //disables box colliders for player 
                     playerAnim.SetBool("dead", true);
+                    rb.AddForce(transform.up * deathThrust);
+                    previousAttacked = true;
                 }
         }
     }
@@ -42,6 +46,6 @@ public class attackScript : MonoBehaviour
     void OnTriggerExit2D(Collider2D col)
     {
         anim.SetBool("attacked", false);
-        anim.SetBool("touchingWall", true); //prevents from transitioning to run anim when player killed 
+        anim.SetBool("touchingWall", true); //prevents from transitioning to run anim when player killed
     }
 }
