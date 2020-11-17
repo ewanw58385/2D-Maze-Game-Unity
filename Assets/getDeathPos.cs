@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class getDeathPos : MonoBehaviour
 {
-
-   private attackScript lastDeathPos = GetComponent<attackScript>();
-   
+    Vector2 lastdeathPos = (Vector2)attackScript.GetComponent("deathPos");
     void Start()
     {
          Vector2 lastDeathRef = lastDeathPos.deathPos;
