@@ -332,7 +332,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1563150740}
   Player: {fileID: 1563150734}
+  GameOver: {fileID: 0}
   timeBeforeFallCounter: 0.25
+  deathPos: {x: 0, y: 0}
 --- !u!61 &320820730
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -609,7 +611,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 429550523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.03, y: 1.5234196, z: -10}
+  m_LocalPosition: {x: -7.22, y: -8.25658, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -906,7 +908,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 1231771631}
+  m_Follow: {fileID: 1396759833}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 5
@@ -930,7 +932,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802539046}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.185, y: 16.512768, z: 2}
+  m_LocalPosition: {x: 86.475006, y: -6.008232, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1413834834}
@@ -1208,7 +1210,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1563150740}
   Player: {fileID: 1563150734}
+  GameOver: {fileID: 1396759831}
   timeBeforeFallCounter: 0.25
+  deathPos: {x: 0, y: 0}
 --- !u!1 &872158047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,7 +1424,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890597074}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.185, y: 14.896188, z: 2}
+  m_LocalPosition: {x: 0.99500036, y: 5.116188, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 805918066}
@@ -18727,50 +18731,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1231771630
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1231771631}
-  - component: {fileID: 1231771632}
-  m_Layer: 0
-  m_Name: deathPosforCamera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1231771631
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1231771630}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1563150737}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1231771632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1231771630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5560bd09d7360994eb532df4563380b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deathPosCalc: {fileID: 1563150734}
 --- !u!1 &1326191530
 GameObject:
   m_ObjectHideFlags: 3
@@ -18875,6 +18835,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1396759833}
   - component: {fileID: 1396759832}
+  - component: {fileID: 1396759834}
   m_Layer: 0
   m_Name: GameOver
   m_TagString: Untagged
@@ -18947,6 +18908,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1396759834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396759831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d37bc6352bf4214a9c88f54ff66ca26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1413834833
 GameObject:
   m_ObjectHideFlags: 3
@@ -19297,11 +19270,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563150734}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.03, y: 3.14, z: 0}
+  m_LocalPosition: {x: -7.22, y: -6.64, z: 0}
   m_LocalScale: {x: 5.741068, y: 5.674541, z: 1}
   m_Children:
   - {fileID: 1641570497}
-  - {fileID: 1231771631}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19389,6 +19361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a1d06610ed83140a4968430788178e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathPoscord: {x: 0, y: 0, z: 0}
 --- !u!1 &1641570496
 GameObject:
   m_ObjectHideFlags: 0
@@ -132701,7 +132674,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 1231771631}
+  m_Follow: {fileID: 1396759833}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 5

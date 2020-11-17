@@ -10,9 +10,11 @@ public class attackScript : MonoBehaviour
     public Rigidbody2D rb;
     private Animator playerAnim;
     public GameObject Player;
+    public GameObject GameOver;
     public float timeBeforeFallCounter = 0.25f;
     private float deathThrust = 800f;  
     bool previousAttacked = false;      
+    public Vector2 deathPos;
 
 
     void Start()
@@ -47,5 +49,6 @@ public class attackScript : MonoBehaviour
     {
         anim.SetBool("attacked", false);
         anim.SetBool("touchingWall", true); //prevents from transitioning to run anim when player killed
+        deathPos = transform.position;
     }
 }
